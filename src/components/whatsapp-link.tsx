@@ -1,6 +1,7 @@
 "use client";
 
 import { track } from "@/components/analytics";
+import { useSiteSettings } from "@/components/site-settings";
 import { whatsappUrl, type WhatsappContext } from "@/lib/site";
 
 type Props = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
@@ -19,9 +20,10 @@ function WhatsappIcon() {
 }
 
 export function WhatsappLink({ context, extra, eventId, number, children, onClick, ...rest }: Props) {
+  const settings = useSiteSettings();
   return (
     <a
-      href={whatsappUrl(context, extra, number)}
+      href={whatsappUrl(context, extra, number ?? settings.whatsapp)}
       target="_blank"
       rel="noopener noreferrer"
       onClick={(e) => {

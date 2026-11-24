@@ -1,6 +1,7 @@
 import { LockKeyhole } from "lucide-react";
 import type { Metadata } from "next";
 import { FernandaSection } from "@/components/fernanda";
+import { getSiteContent } from "@/lib/site-content";
 import { LeadForms } from "@/components/lead-forms";
 import { ScrollSequence } from "@/components/scroll-sequence";
 import { SiteFooter } from "@/components/site-footer";
@@ -37,7 +38,10 @@ const buyers = [
   "Profissionais em transição para o empreendedorismo",
 ];
 
-export default function CompraEVendaPage() {
+export const revalidate = 300;
+
+export default async function CompraEVendaPage() {
+  const { fernanda } = await getSiteContent();
   return (
     <>
       <SiteHeader current="empresas" whatsapp="institucional" />
@@ -58,13 +62,7 @@ export default function CompraEVendaPage() {
           </div>
         </section>
 
-        <FernandaSection
-          headline="Visão empresarial para decisões que transformam negócios."
-          paragraphs={[
-            "À frente da Avança Imóveis e da Avança Negócios, Fernanda atua com uma visão voltada ao desenvolvimento empresarial, à construção de relacionamentos estratégicos e à identificação de novas oportunidades.",
-            "Sua atuação como empreendedora e mentora de grandes negócios contribui para uma abordagem que valoriza o entendimento dos objetivos de cada empresário e a construção de conexões relevantes.",
-          ]}
-        />
+        <FernandaSection content={fernanda} variant="empresas" />
 
         <div className="sides">
           <section className="side side--sell" aria-labelledby="sell-title">

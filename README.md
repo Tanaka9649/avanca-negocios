@@ -39,10 +39,22 @@ Antes de abrir PR: `npm run typecheck && npm run lint && npm run build`.
 | `/privacidade` | Política de Privacidade |
 | `/api/leads` | Gravação dos formulários (validação, honeypot, rate limit, consentimento) |
 | `/api/whatsapp-click` | Contagem de cliques no WhatsApp, sem dados pessoais |
-| `/admin` | Painel (em construção) |
+| `/admin` | Painel: dashboard, CRM, eventos, empresas, conteúdo, usuários e configurações |
+| `/admin/primeiro-acesso` | Criação do primeiro administrador (exige `ADMIN_SETUP_TOKEN`; fecha após o uso) |
+| `/midia/[id]` | Imagens enviadas pelo painel, otimizadas em WebP |
 
 ## Regras de conteúdo
 
 - Nada de números, prêmios, cases, depoimentos ou empresas fictícias.
 - Empresas participantes e próximos encontros só aparecem quando cadastrados e publicados no painel; sem cadastro, a seção não é exibida.
 - Eventos de conversão (`generate_lead`, `whatsapp_click`) disparam só após a confirmação da ação e nunca levam dados do formulário.
+
+## Painel
+
+Perfis: Administrador (tudo), Gestor (tudo menos usuários), Atendimento (dashboard e leads), Editor de conteúdo (eventos, empresas e conteúdo). As permissões são verificadas no servidor em cada página e ação. Os usuários do painel não acessam a plataforma da Avança Imóveis.
+
+Imagens ficam na tabela `media_assets`, já convertidas para WebP. O Neon Object Storage não está disponível na região de São Paulo e a criação de um Vercel Blob foi negada para a conexão usada no desenvolvimento; se o volume crescer, migre para Vercel Blob.
+
+## Testes locais sem rede
+
+`node scripts/pglite-server.mjs /tmp/an-pglite 54329` sobe um Postgres local (PGlite) com as migrations. Use `DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54329/postgres` no `.env.local`.

@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { AnalyticsScripts, UtmCapture } from "@/components/analytics";
 import { PageTransitionProvider } from "@/components/page-transition";
+import { SiteSettingsProvider } from "@/components/site-settings";
+import { getSiteContent } from "@/lib/site-content";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -13,11 +15,14 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: "#060a2b", width: "device-width", initialScale: 1 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const { contact } = await getSiteContent();
   return (
     <html lang="pt-BR">
       <body>
-        <PageTransitionProvider>{children}</PageTransitionProvider>
+        <SiteSettingsProvider value={{ whatsapp: contact.whatsapp }}>
+          <PageTransitionProvider>{children}</PageTransitionProvider>
+        </SiteSettingsProvider>
         <UtmCapture />
         <AnalyticsScripts />
       </body>

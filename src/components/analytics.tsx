@@ -1,6 +1,7 @@
 "use client";
 
 import Script from "next/script";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 const GTM = process.env.NEXT_PUBLIC_GTM_ID;
@@ -51,6 +52,8 @@ export function readAttribution() {
 }
 
 export function AnalyticsScripts() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
   return (
     <>
       {GTM && (

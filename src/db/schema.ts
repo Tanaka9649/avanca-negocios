@@ -1,6 +1,6 @@
 import { sql } from "drizzle-orm";
 import {
-  boolean, index, integer, jsonb, pgEnum, pgTable, text, timestamp, uniqueIndex, uuid,
+  boolean, customType, index, integer, jsonb, pgEnum, pgTable, text, timestamp, uniqueIndex, uuid,
 } from "drizzle-orm/pg-core";
 
 const timestamps = {
@@ -175,4 +175,24 @@ export const rateLimits = pgTable("rate_limits", {
   key: text("key").primaryKey(),
   count: integer("count").notNull().default(0),
   windowStart: timestamp("window_start", { withTimezone: true }).notNull().defaultNow(),
+});
+
+const bytea = customType<{ data: Buffer; driverData: string | Buffer | Uint8Array }>({
+  dataType: () => "bytea",
+  toDriver: (v) => `\\x${v.toString("hex")}`,
+  fromDriver: (v) => (Buffer.isBuffer(v) ? v : v instanceof Uint8Array ? Buffer.from(v) : Buffer.from(String(v).replace(/^\\x/, ""), "hex")),
+});
+
+// Imagens enviadas pelo painel (divulgação de eventos, logos, foto institucional), já otimizadas em WebP.
+// O Neon Object Storage não está disponível na região de São Paulo; o volume previsto é pequeno.
+export const mediaAssets = pgTable("media_assets", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  contentType: text("content_type").notNull(),
+  bytes: bytea("bytes").notNull(),
+  width: integer("width"),
+  height: integer("height"),
+  size: integer("size").notNull(),
+  purpose: text("purpose").notNull(), // evento | empresa | institucional
+  createdBy: uuid("created_by").references(() => businessUsers.id, { onDelete: "set null" }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });

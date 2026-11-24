@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { FernandaSection } from "@/components/fernanda";
+import { getSiteContent } from "@/lib/site-content";
 import { ParticipatingCompanies } from "@/components/participating-companies";
 import { ScrollSequence } from "@/components/scroll-sequence";
 import { SiteFooter } from "@/components/site-footer";
@@ -61,7 +62,7 @@ const jsonLd = {
 };
 
 export default async function EventosPage() {
-  const [events, companies] = await Promise.all([getUpcomingEvents(), getParticipatingCompanies()]);
+  const [events, companies, { fernanda }] = await Promise.all([getUpcomingEvents(), getParticipatingCompanies(), getSiteContent()]);
 
   return (
     <>
@@ -83,13 +84,7 @@ export default async function EventosPage() {
           </div>
         </section>
 
-        <FernandaSection
-          headline="Conectando pessoas que transformam negócios."
-          paragraphs={[
-            "À frente da Avança Imóveis e da Avança Negócios, Fernanda reúne visão empreendedora, liderança e uma atuação voltada à construção de relacionamentos estratégicos.",
-            "Como empresária e mentora de grandes negócios, acredita no potencial das conexões para gerar oportunidades, compartilhar conhecimento e impulsionar o desenvolvimento empresarial.",
-          ]}
-        />
+        <FernandaSection content={fernanda} variant="eventos" />
 
         <ParticipatingCompanies companies={companies} />
 
