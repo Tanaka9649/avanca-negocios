@@ -40,7 +40,7 @@ export default function Home() {
         <div className="home__grid">
           <div>
             <div className="home__symbol">
-              <Image src="/brand/avanca-negocios-simbolo.png" alt="Avança Negócios" width={416} height={369} priority />
+              <Image src="/brand/avanca-negocios.png" alt="Avança Negócios" width={1400} height={935} priority sizes="290px" />
             </div>
             <h1 className="display home__title">
               <span className="line-mask"><span>Conectamos pessoas.</span></span>

@@ -143,10 +143,10 @@ a { color: inherit; }
 .home__top { display: flex; justify-content: space-between; align-items: center; }
 .home__place { font-size: 14px; color: var(--on-dark-muted); letter-spacing: 0.02em; }
 .home__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 44px; align-content: center; }
-.home__symbol { width: clamp(78px, 9vw, 116px); margin-bottom: clamp(24px, 4vh, 44px); }
+.home__symbol { width: clamp(190px, 19vw, 290px); margin-bottom: clamp(22px, 4vh, 40px); }
 .home__symbol img { width: 100%; height: auto; clip-path: inset(100% 0 0 0); animation: symbol-in 1s var(--ease-out) 0.1s forwards; }
 @keyframes symbol-in { to { clip-path: inset(0 0 0 0); } }
-.home__title { font-size: clamp(40px, 4.6vw, 70px); line-height: 1.02; }
+.home__title { font-size: clamp(40px, 4.4vw, 64px); line-height: 1.02; }
 .home__title .line-mask:nth-child(1) > span { animation-delay: 0.45s; }
 .home__title .line-mask:nth-child(2) > span { animation-delay: 0.55s; }
 .home__title .line-mask:nth-child(3) > span { animation-delay: 0.65s; }

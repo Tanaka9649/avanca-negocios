@@ -1,8 +1,8 @@
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
 export const IMOVEIS_URL = (process.env.NEXT_PUBLIC_IMOVEIS_URL ?? "https://imoveisplatform.vercel.app").replace(/\/$/, "");
 
-/** Somente dígitos, com DDI. Valor confirmado pelo cliente em 24/11/2026: (34) 9974-0775. */
-export const WHATSAPP_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "553499740775").replace(/\D/g, "");
+/** Somente dígitos, com DDI. Número confirmado pelo cliente em 24/11/2026: (34) 99974-0775. */
+export const WHATSAPP_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "5534999740775").replace(/\D/g, "");
 
 export type WhatsappContext = "eventos" | "venda" | "compra" | "institucional";
 

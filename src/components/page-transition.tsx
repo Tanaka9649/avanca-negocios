@@ -66,8 +66,8 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
           <img
             src={variant === "imoveis" ? "/brand/avanca-imoveis-simbolo-branco.png" : "/brand/avanca-negocios-simbolo.png"}
             alt=""
-            width={variant === "imoveis" ? 436 : 416}
-            height={385}
+            width={variant === "imoveis" ? 436 : 800}
+            height={variant === "imoveis" ? 385 : 710}
           />
         </div>
       </div>
