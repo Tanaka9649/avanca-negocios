@@ -1,55 +1,32 @@
 import type { Metadata } from "next";
-import { FernandaSection } from "@/components/fernanda";
-import { getSiteContent } from "@/lib/site-content";
+import { FernandaEventos } from "@/components/fernanda";
+import { NetworkArt } from "@/components/motion/network-art";
+import { SceneRoot } from "@/components/motion/scene-root";
 import { ParticipatingCompanies } from "@/components/participating-companies";
-import { ScrollSequence } from "@/components/scroll-sequence";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { UpcomingEvents } from "@/components/upcoming-events";
 import { WhatsappLink } from "@/components/whatsapp-link";
 import { getParticipatingCompanies, getUpcomingEvents } from "@/lib/public-data";
 import { SITE_URL } from "@/lib/site";
+import { getSiteContent } from "@/lib/site-content";
+import "../negocios.css";
 
 export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Eventos e networking empresarial em Frutal",
-  description: "Grupo de networking empresarial de Frutal, MG. Encontros que conectam empresários, conhecimento, relacionamentos e oportunidades de negócio.",
+  description: "O networking que conecta empresários de Frutal, MG. Amplie sua rede de contatos, construa parcerias estratégicas e encontre novas oportunidades de negócios.",
   alternates: { canonical: "/eventos" },
   openGraph: { title: "Avança Negócios — Eventos e networking em Frutal", url: "/eventos" },
 };
 
-const pillars = [
-  { title: "Conexões estratégicas", text: "Conheça empresários e profissionais de diferentes segmentos." },
-  { title: "Oportunidades comerciais", text: "Construa relacionamentos que favoreçam novas parcerias e negócios." },
-  { title: "Desenvolvimento empresarial", text: "Compartilhe conhecimentos, experiências e perspectivas de mercado." },
-  { title: "Relacionamentos de valor", text: "Fortaleça conexões profissionais com visão de longo prazo." },
+const benefits = [
+  { title: "Conexões estratégicas", text: "Novos relacionamentos comerciais com empresários de diferentes segmentos." },
+  { title: "Oportunidades comerciais", text: "Parcerias estratégicas e novas oportunidades de negócio nascem da convivência." },
+  { title: "Desenvolvimento empresarial", text: "Troca de experiências e de visão de mercado para crescer com consistência." },
+  { title: "Relacionamentos de valor", text: "Conexões construídas com confiança e com visão de longo prazo." },
 ];
-
-function ConnectionArt() {
-  return (
-    <svg viewBox="0 0 600 560" aria-hidden="true">
-      <defs>
-        <linearGradient id="ev-grad" gradientUnits="userSpaceOnUse" x1="60" y1="70" x2="540" y2="480">
-          <stop offset="0" stopColor="#e39282" />
-          <stop offset="0.35" stopColor="#bc33f2" />
-          <stop offset="0.6" stopColor="#862cd4" />
-          <stop offset="1" stopColor="#3a52ff" />
-        </linearGradient>
-      </defs>
-      <path className="edge" pathLength={1} d="M300 70 L540 480" />
-      <path className="edge" pathLength={1} d="M540 480 L60 480" />
-      <path className="edge" pathLength={1} d="M60 480 L300 70" />
-      <path d="M300 250 L360 352 L240 352 Z" fill="none" stroke="rgba(242,241,246,0.18)" strokeWidth="1.2" strokeLinejoin="round" />
-      <circle className="node" cx="300" cy="70" r="8" style={{ animationDelay: "0.2s" }} />
-      <circle className="node" cx="540" cy="480" r="8" style={{ animationDelay: "0.6s" }} />
-      <circle className="node" cx="60" cy="480" r="8" style={{ animationDelay: "1s" }} />
-      <text className="label" x="300" y="40" textAnchor="middle" style={{ animationDelay: "0.4s" }}>Pessoas</text>
-      <text className="label" x="540" y="516" textAnchor="middle" style={{ animationDelay: "0.8s" }}>Oportunidades</text>
-      <text className="label" x="60" y="516" textAnchor="middle" style={{ animationDelay: "1.2s" }}>Conhecimento</text>
-    </svg>
-  );
-}
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -61,63 +38,79 @@ const jsonLd = {
   address: { "@type": "PostalAddress", addressLocality: "Frutal", addressRegion: "MG", addressCountry: "BR" },
 };
 
+const words = (s: string) => s.split(" ").flatMap((w, i) => [i ? " " : null, <span key={i} className="word"><span data-final-word>{w}</span></span>]);
+
 export default async function EventosPage() {
   const [events, companies, { fernanda }] = await Promise.all([getUpcomingEvents(), getParticipatingCompanies(), getSiteContent()]);
 
   return (
     <>
       <SiteHeader current="eventos" whatsapp="eventos" />
-      <main>
-        <section className="ev-hero" aria-labelledby="ev-title">
-          <div className="ev-hero__art"><ConnectionArt /></div>
-          <div className="wrap ev-hero__inner">
-            <h1 id="ev-title" className="display ev-hero__title">
-              <span className="line-mask"><span>Grandes negócios</span></span>
-              <span className="line-mask"><span>começam com</span></span>
-              <span className="line-mask"><span>grandes conexões.</span></span>
-            </h1>
-            <p className="lede fade-in">Um ambiente criado para conectar empresários, compartilhar experiências e transformar relacionamentos em novas oportunidades de crescimento.</p>
-            <div className="actions fade-in">
-              <WhatsappLink context="eventos" className="btn btn--light">Quero fazer parte</WhatsappLink>
-              <a href={events.length ? "#encontros" : "#networking"} className="btn btn--ghost">Conheça nossos encontros</a>
+      <SceneRoot scenes="eventos" className="neg neg--eventos">
+        <section className="ev-hero" aria-labelledby="ev-title" data-hero>
+          <div className="wrap ev-hero__grid">
+            <div className="ev-hero__copy" data-hero-copy>
+              <h1 id="ev-title" className="display ev-hero__title">
+                <span className="line-mask"><span>O networking que</span></span>
+                <span className="line-mask"><span>conecta empresários</span></span>
+                <span className="line-mask"><span>de Frutal.</span></span>
+              </h1>
+              <p className="lede fade-in">Amplie sua rede de contatos, construa parcerias estratégicas e encontre novas oportunidades de negócios.</p>
+              <div className="actions fade-in">
+                <WhatsappLink context="eventos" className="btn btn--ink">Quero fazer parte</WhatsappLink>
+                <a href="#comunidade" className="btn btn--outline">Conheça a comunidade</a>
+              </div>
             </div>
+            <div className="ev-hero__art"><NetworkArt /></div>
           </div>
         </section>
 
-        <FernandaSection content={fernanda} variant="eventos" />
+        <FernandaEventos content={fernanda} />
 
         <ParticipatingCompanies companies={companies} />
 
-        <section className="section white" id="networking" aria-labelledby="networking-title">
-          <div className="wrap split">
+        <section className="ev-community" id="comunidade" aria-labelledby="comunidade-title">
+          <div className="wrap ev-community__grid">
+            <p className="ev-community__place"><strong>Frutal</strong><span>Minas Gerais</span></p>
             <div>
-              <h2 id="networking-title" className="about__quote">O crescimento empresarial também acontece através das pessoas que você conhece.</h2>
-              <p className="about__place"><strong>Frutal</strong><span>Minas Gerais</span></p>
-            </div>
-            <div style={{ alignSelf: "end" }}>
-              <p className="body">A Avança Negócios é um grupo de networking empresarial de Frutal. Reúne empresários e profissionais de diferentes segmentos em encontros pensados para aproximar pessoas, trocar experiências e abrir espaço para novas parcerias.</p>
-              <p className="body" style={{ marginTop: 16 }}>Mais do que um evento, é um ambiente de relacionamento contínuo, em que conhecimento e confiança se transformam em oportunidades comerciais.</p>
+              <h2 id="comunidade-title" className="h2">Um grupo de networking empresarial feito para Frutal.</h2>
+              <p className="lede ev-community__lede">A Avança Negócios reúne empresários e profissionais de diferentes segmentos para trocar experiências, aproximar pessoas e abrir espaço para novas parcerias.</p>
             </div>
           </div>
         </section>
 
-        <section className="section" aria-labelledby="beneficios-title">
-          <div className="wrap">
-            <h2 id="beneficios-title" className="h2" style={{ maxWidth: "15ch" }}>O que muda quando você faz parte.</h2>
-            <ScrollSequence items={pillars} variant="chain" />
+        <section className="ev-benefits" aria-labelledby="beneficios-title" data-benefits>
+          <div className="wrap ev-benefits__grid">
+            <div className="ev-benefits__sticky">
+              <h2 id="beneficios-title" className="h2">O que muda quando você faz parte.</h2>
+            </div>
+            <div className="ev-benefits__listwrap" data-ben-list>
+              <span className="ev-benefits__rail" aria-hidden="true"><span data-ben-line /></span>
+              <ol className="ev-benefits__list">
+              {benefits.map((b) => (
+                <li key={b.title} className="ev-benefit" data-benefit>
+                  <span className="ev-benefit__node" aria-hidden="true"><span data-ben-link /></span>
+                  <h3 className="h3">{b.title}</h3>
+                  <p className="body">{b.text}</p>
+                </li>
+              ))}
+              </ol>
+            </div>
           </div>
         </section>
 
         <UpcomingEvents events={events} />
 
-        <section className="section final" aria-labelledby="final-title">
-          <div className="wrap final__inner">
-            <h2 id="final-title" className="h2">Sua próxima grande oportunidade pode começar com uma conversa.</h2>
-            <p className="lede" style={{ color: "rgba(255,255,255,0.78)" }}>Faça parte de um ambiente que valoriza conexões, conhecimento e crescimento empresarial.</p>
-            <div className="actions"><WhatsappLink context="eventos" className="btn btn--light">Quero conhecer a Avança Negócios</WhatsappLink></div>
+        <section className="ev-final" aria-labelledby="final-title" data-final>
+          <span className="ev-final__bg" aria-hidden="true" data-final-bg />
+          <div className="wrap ev-final__inner">
+            <h2 id="final-title" className="ev-final__title">{words("Sua próxima grande oportunidade pode começar com uma conversa.")}</h2>
+            <div className="actions" data-final-after>
+              <WhatsappLink context="eventos" className="btn btn--light">Quero fazer parte</WhatsappLink>
+            </div>
           </div>
         </section>
-      </main>
+      </SceneRoot>
       <SiteFooter />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </>

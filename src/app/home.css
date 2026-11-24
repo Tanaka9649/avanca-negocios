@@ -1,0 +1,79 @@
+/* ---------------------------------------------------------------
+   AVANÇA — página inicial. Identidade institucional neutra:
+   branco, preto e cinzas. Nenhuma cor das operações em repouso.
+---------------------------------------------------------------- */
+.av { min-height: 100svh; background: var(--n-50); color: var(--n-900); display: flex; }
+.av__inner { width: 100%; max-width: calc(1320px + var(--gutter) * 2); margin: 0 auto; padding: 22px var(--gutter) 28px; display: grid; grid-template-rows: auto 1fr auto; gap: 28px; }
+.av__top { display: flex; justify-content: space-between; font-size: 13px; color: var(--n-500); letter-spacing: 0.01em; }
+.av__top a { text-decoration: none; }
+.av__top a:hover { color: var(--n-900); }
+
+.av__hero { align-self: center; display: grid; gap: 22px; padding: 12px 0; }
+/* Entrada: o símbolo é revelado por uma máscara triangular que cresce a partir da base, no formato do próprio A */
+.av__mark { width: clamp(64px, 6.4vw, 96px); }
+.av__mark img { width: 100%; height: auto; clip-path: polygon(50% 100%, 50% 100%, 50% 100%); animation: av-rise 0.7s var(--ease-out) 0s forwards; }
+@keyframes av-rise { to { clip-path: polygon(50% -40%, -40% 120%, 140% 120%); } }
+.av__title { margin: 8px 0 0; font-size: clamp(44px, 7.4vw, 112px); line-height: 0.98; font-weight: 540; letter-spacing: -0.05em; color: var(--n-900); }
+.av__title .line-mask:nth-child(1) > span { animation-delay: 0.12s; }
+.av__title .line-mask:nth-child(2) > span { animation-delay: 0.2s; }
+.av__lede { margin: 0; max-width: 44ch; font-size: clamp(16px, 1.35vw, 19px); line-height: 1.55; color: var(--n-500); opacity: 0; animation: fade-in 0.6s var(--ease) 0.45s forwards; }
+
+/* Três direcionamentos com peso visual idêntico */
+.av__routes { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--n-200); }
+.av-route {
+  --fill: var(--n-900); --fg: #fff;
+  position: relative; display: grid; grid-template-columns: 1fr auto; grid-template-areas: "top top" "brand go" "title go" "text go";
+  align-items: end; column-gap: 16px; padding: 18px 4px 18px 0; text-decoration: none; color: var(--n-900);
+  border-bottom: 1px solid var(--n-200); isolation: isolate; overflow: hidden; -webkit-tap-highlight-color: transparent;
+  opacity: 0; transform: translateY(10px); animation: av-route-in 0.6s var(--ease-out) calc(0.55s + var(--i) * 0.07s) forwards;
+}
+@keyframes av-route-in { to { opacity: 1; transform: none; } }
+.av-route__fill { position: absolute; inset: 0; z-index: -1; background: var(--fill); clip-path: inset(100% 0 0 0); transition: clip-path 0.5s var(--ease-out); }
+.av-route__top { grid-area: top; display: none; }
+.av-route__brand { grid-area: brand; font-size: 13px; color: var(--n-500); transition: color 0.35s ease; }
+.av-route__title { grid-area: title; font-size: clamp(20px, 2vw, 28px); font-weight: 580; letter-spacing: -0.025em; line-height: 1.12; transition: transform 0.45s var(--ease-out), color 0.35s ease; }
+.av-route__text { grid-area: text; margin-top: 4px; font-size: 14.5px; line-height: 1.45; color: var(--n-500); transition: color 0.35s ease; max-width: 36ch; }
+.av-route__go { grid-area: go; align-self: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--n-200); display: grid; place-items: center; transition: transform 0.45s var(--ease-out), border-color 0.35s ease, background-color 0.35s ease, color 0.35s ease; }
+.av-route__icon { color: var(--n-900); transition: color 0.35s ease; }
+.av-route__mark { width: 34px; height: auto; opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease, transform 0.45s var(--ease-out); }
+
+/* Ao passar o mouse, a identidade da operação é revelada; ao sair, volta ao neutro */
+.av-route--imoveis { --fill: #000; }
+.av-route--eventos { --fill: var(--brand-gradient); }
+.av-route--empresas { --fill: var(--blue); }
+@media (hover: hover) {
+  .av-route:hover .av-route__fill, .av-route:focus-visible .av-route__fill { clip-path: inset(0 0 0 0); }
+  .av-route:hover, .av-route:focus-visible { color: var(--fg); }
+  .av-route:hover .av-route__brand, .av-route:hover .av-route__text, .av-route:focus-visible .av-route__brand, .av-route:focus-visible .av-route__text { color: rgba(255, 255, 255, 0.78); }
+  .av-route:hover .av-route__icon, .av-route:focus-visible .av-route__icon { color: #fff; }
+  .av-route:hover .av-route__title { transform: translateX(6px); }
+  .av-route:hover .av-route__go, .av-route:focus-visible .av-route__go { transform: translate(3px, -3px); border-color: rgba(255, 255, 255, 0.5); color: #fff; }
+  .av-route:hover .av-route__mark, .av-route:focus-visible .av-route__mark { opacity: 1; transform: none; }
+}
+.av-route:active .av-route__fill { clip-path: inset(0 0 0 0); }
+.av-route:active { color: #fff; }
+.av-route:active .av-route__go { transform: scale(0.92); }
+
+@media (min-width: 980px) {
+  .av__inner { padding-top: 28px; padding-bottom: 32px; gap: 32px; }
+  .av__routes { grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 0; }
+  .av-route {
+    grid-template-columns: 1fr auto; grid-template-areas: "top top" "brand brand" "title title" "text go";
+    min-height: 260px; padding: 26px 26px 26px 28px; border-bottom: 0; border-top: 1px solid var(--n-200);
+  }
+  .av-route + .av-route { border-left: 1px solid var(--n-200); }
+  .av-route__top { display: flex; justify-content: space-between; align-items: flex-start; align-self: start; height: 100%; }
+  .av-route__title { margin-top: 2px; }
+  .av-route__go { align-self: end; }
+  /* Linha superior desenhada na entrada */
+  .av-route::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--n-900); transform: scaleX(0); transform-origin: left; animation: av-line 0.9s var(--ease-out) calc(0.65s + var(--i) * 0.07s) forwards; }
+  @keyframes av-line { 0% { transform: scaleX(0); } 60% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+}
+@media (max-width: 979px) {
+  .av-route__brand { font-size: 12.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av__mark img { clip-path: none; }
+  .av-route, .av__lede { opacity: 1; transform: none; }
+}

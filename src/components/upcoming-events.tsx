@@ -12,9 +12,9 @@ const STATUS: Record<string, string | null> = { agendado: null, vagas_limitadas:
 export function UpcomingEvents({ events }: { events: PublicEvent[] }) {
   if (events.length === 0) return null;
   return (
-    <section className="section deep" id="encontros" aria-labelledby="encontros-title">
+    <section className="ev-events" id="encontros" aria-labelledby="encontros-title">
       <div className="wrap">
-        <h2 id="encontros-title" className="h2">Próximos encontros</h2>
+        <h2 id="encontros-title" className="h2">Próximos encontros.</h2>
         <ul className="events">
           {events.map((ev) => {
             const status = STATUS[ev.status];
@@ -37,7 +37,7 @@ export function UpcomingEvents({ events }: { events: PublicEvent[] }) {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img className="event__img" src={ev.imageUrl} alt={ev.imageAlt ?? `Divulgação de ${ev.name}`} loading="lazy" />
                 ) : <span />}
-                <WhatsappLink context="eventos" eventId={ev.id} extra={`Tenho interesse no encontro "${ev.name}".`} className="btn btn--light">
+                <WhatsappLink context="eventos" eventId={ev.id} extra={`Tenho interesse no encontro "${ev.name}".`} className="btn btn--ink">
                   Tenho interesse
                 </WhatsappLink>
               </li>

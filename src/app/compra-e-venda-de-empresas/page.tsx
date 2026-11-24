@@ -1,130 +1,141 @@
 import { LockKeyhole } from "lucide-react";
 import type { Metadata } from "next";
-import { FernandaSection } from "@/components/fernanda";
-import { getSiteContent } from "@/lib/site-content";
+import { FernandaEmpresas } from "@/components/fernanda";
 import { LeadForms } from "@/components/lead-forms";
-import { ScrollSequence } from "@/components/scroll-sequence";
+import { SceneRoot } from "@/components/motion/scene-root";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getSiteContent } from "@/lib/site-content";
+import "../negocios.css";
 
 export const metadata: Metadata = {
   title: "Compra e venda de empresas em Frutal e região",
-  description: "Conectamos empresários e investidores a oportunidades de compra e venda de empresas. Atendimento individual e confidencial.",
+  description: "Conectamos empresários e investidores para facilitar novas oportunidades de aquisição e venda de negócios, com atendimento individualizado e confidencial.",
   alternates: { canonical: "/compra-e-venda-de-empresas" },
   openGraph: { title: "Avança Negócios — Compra e venda de empresas", url: "/compra-e-venda-de-empresas" },
 };
 
+export const revalidate = 300;
+
 const steps = [
-  { title: "Primeiro contato", text: "Você nos conta, em poucas linhas, o que procura. Sem documentos nesta etapa." },
-  { title: "Entendimento dos objetivos", text: "Uma conversa individual para compreender seus objetivos, prazos e o perfil do negócio." },
-  { title: "Identificação do perfil e das oportunidades", text: "Avaliamos quais conexões fazem sentido para o que você busca." },
-  { title: "Aproximação entre as partes", text: "Quando há aderência, aproximamos comprador e vendedor de forma cuidadosa." },
+  { title: "Primeiro contato", text: "Você conta, em poucas linhas, o que procura. Sem documentos nesta etapa." },
+  { title: "Entendimento dos objetivos", text: "Uma conversa individual sobre objetivos, prazos e perfil do negócio." },
+  { title: "Identificação de oportunidades", text: "Avaliamos quais conexões fazem sentido para o que você busca." },
+  { title: "Aproximação entre as partes", text: "Quando há aderência, aproximamos comprador e vendedor com cuidado." },
   { title: "Acompanhamento da negociação", text: "Seguimos próximos durante as conversas entre as partes." },
 ];
 
-const sellers = [
-  "Desejam vender suas empresas",
-  "Estão planejando a aposentadoria",
-  "Pretendem iniciar uma nova etapa profissional",
-  "Buscam potenciais compradores",
-  "Desejam avaliar novas oportunidades de negociação",
-];
+const sellers = ["Quer vender ou passar a empresa adiante", "Planeja aposentadoria ou uma nova etapa", "Busca compradores com discrição"];
+const buyers = ["Investidores e empreendedores", "Empresas em expansão", "Quem prefere começar por uma operação existente"];
 
-const buyers = [
-  "Investidores",
-  "Empreendedores",
-  "Empresários interessados em expansão",
-  "Pessoas interessadas em adquirir operações existentes",
-  "Profissionais em transição para o empreendedorismo",
-];
-
-export const revalidate = 300;
+const words = (s: string) => s.split(" ").flatMap((w, i) => [i ? " " : null, <span key={i} className="word"><span data-final-word>{w}</span></span>]);
 
 export default async function CompraEVendaPage() {
   const { fernanda } = await getSiteContent();
   return (
     <>
       <SiteHeader current="empresas" whatsapp="institucional" />
-      <main>
-        <section className="mna-hero" aria-labelledby="mna-title">
-          <span className="horizon" aria-hidden="true" />
-          <div className="wrap mna-hero__inner">
+      <SceneRoot scenes="empresas" className="neg neg--empresas">
+        <section className="mna-hero" aria-labelledby="mna-title" data-mna-hero>
+          <span className="mna-hero__horizon mna-hero__horizon--top" aria-hidden="true" data-horizon-top />
+          <span className="mna-hero__horizon mna-hero__horizon--bottom" aria-hidden="true" data-horizon-bottom />
+          <div className="wrap mna-hero__inner" data-mna-copy>
             <h1 id="mna-title" className="display mna-hero__title">
-              <span className="line-mask"><span>Grandes oportunidades.</span></span>
-              <span className="line-mask"><span>Novos negócios.</span></span>
-              <span className="line-mask"><span>Novos horizontes.</span></span>
+              <span className="line-mask"><span>Quer comprar ou</span></span>
+              <span className="line-mask"><span>vender uma empresa?</span></span>
             </h1>
-            <p className="lede fade-in">Conectamos empresários e investidores a oportunidades de compra e venda de empresas, criando caminhos para novas etapas de crescimento empresarial.</p>
-            <div className="actions fade-in">
-              <a href="#vender" className="btn btn--light">Quero vender minha empresa</a>
-              <a href="#comprar" className="btn btn--ghost">Quero comprar uma empresa</a>
+            <div className="mna-hero__foot">
+              <p className="lede fade-in">Conectamos empresários e investidores para facilitar novas oportunidades de aquisição e venda de negócios, com atendimento individualizado e confidencial.</p>
+              <div className="actions fade-in">
+                <a href="#vender" className="btn btn--ink">Quero vender minha empresa</a>
+                <a href="#comprar" className="btn btn--outline">Quero comprar uma empresa</a>
+              </div>
             </div>
           </div>
         </section>
 
-        <FernandaSection content={fernanda} variant="empresas" />
+        <FernandaEmpresas content={fernanda} />
 
-        <div className="sides">
-          <section className="side side--sell" aria-labelledby="sell-title">
-            <div className="side__inner">
-              <h2 id="sell-title" className="h2">Toda trajetória empresarial pode ter um novo capítulo.</h2>
-              <ul aria-label="Para empresários que">{sellers.map((s) => <li key={s}>{s}</li>)}</ul>
-              <p className="body">O primeiro passo é compreender os seus objetivos e o perfil do seu negócio. A partir daí, avaliamos com você os caminhos possíveis.</p>
-              <div className="actions" style={{ marginTop: 32 }}><a href="#vender" className="btn btn--dark">Quero vender minha empresa</a></div>
-            </div>
-          </section>
-          <section className="side side--buy" aria-labelledby="buy-title">
-            <div className="side__inner">
-              <h2 id="buy-title" className="h2">O próximo passo do seu crescimento pode estar em um negócio que já existe.</h2>
-              <ul aria-label="Para">{buyers.map((s) => <li key={s}>{s}</li>)}</ul>
-              <p className="body">Comprar uma operação em funcionamento pode encurtar o caminho até o seu próximo objetivo. Conte o que procura e conversamos.</p>
-              <div className="actions" style={{ marginTop: 32 }}><a href="#comprar" className="btn btn--light">Quero comprar uma empresa</a></div>
-            </div>
-          </section>
-        </div>
-
-        <section className="section white" aria-labelledby="como-title">
-          <div className="wrap">
-            <h2 id="como-title" className="h2" style={{ maxWidth: "12ch" }}>Como funciona.</h2>
-            <ScrollSequence items={steps} variant="steps" />
+        <section className="paths" aria-label="Para quem é" data-paths>
+          <div className="wrap paths__grid">
+            <article className="path path--sell" data-path-col="sell" aria-labelledby="sell-title">
+              <p className="path__tag">Vender</p>
+              <h2 id="sell-title" className="h3 path__title">Um novo capítulo para a sua empresa.</h2>
+              <ul>{sellers.map((s) => <li key={s}>{s}</li>)}</ul>
+              <a href="#vender" className="path__link">Quero vender minha empresa</a>
+            </article>
+            <article className="path path--buy" data-path-col="buy" aria-labelledby="buy-title">
+              <p className="path__tag">Comprar</p>
+              <h2 id="buy-title" className="h3 path__title">Crescer a partir de um negócio que já funciona.</h2>
+              <ul>{buyers.map((s) => <li key={s}>{s}</li>)}</ul>
+              <a href="#comprar" className="path__link">Quero comprar uma empresa</a>
+            </article>
+          </div>
+          <div className="converge" data-converge aria-hidden="true">
+            <svg viewBox="0 0 1000 220" preserveAspectRatio="none">
+              <path data-converge-line pathLength={1} d="M250 0 V60 C250 150 500 110 500 200" />
+              <path data-converge-line pathLength={1} d="M750 0 V60 C750 150 500 110 500 200" />
+            </svg>
+            <span className="converge__dot" data-converge-dot />
+            <span className="converge__label" data-converge-label>Um atendimento para as duas pontas</span>
           </div>
         </section>
 
-        <section className="section deep" aria-labelledby="confid-title">
-          <div className="wrap confid">
-            <div>
-              <span className="confid__mark"><LockKeyhole size={26} strokeWidth={1.5} aria-hidden="true" /></span>
-              <h2 id="confid-title" className="h2" style={{ marginTop: 28, maxWidth: "14ch" }}>Grandes decisões exigem confiança e discrição.</h2>
+        <section className="steps" aria-labelledby="como-title" data-steps>
+          <div className="wrap steps__grid">
+            <div className="steps__sticky">
+              <h2 id="como-title" className="h2">Como funciona.</h2>
+              <p className="body">Cinco etapas, do primeiro contato ao acompanhamento da negociação.</p>
             </div>
-            <div>
-              <p className="lede">Negociações empresariais envolvem informações sensíveis. Por isso, a confidencialidade orienta cada etapa do atendimento.</p>
-              <p className="body" style={{ marginTop: 20 }}>As informações que você enviar são usadas apenas para compreender os interesses das partes e organizar o atendimento. Nenhum dado de empresas interessadas em venda é publicado neste site, e nesta primeira etapa não pedimos documentos financeiros.</p>
+            <div className="steps__listwrap" data-steps-list>
+              <span className="steps__rail" aria-hidden="true"><span data-steps-progress /></span>
+              <ol className="steps__list">
+                {steps.map((s, i) => (
+                  <li key={s.title} className="step" data-step>
+                    <span className="step__num" aria-hidden="true">{i + 1}</span>
+                    <h3 className="h3">{s.title}</h3>
+                    <p className="body">{s.text}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </section>
 
-        <section className="section light" aria-labelledby="form-title">
-          <span id="vender" style={{ position: "relative", top: -24 }} />
-          <span id="comprar" style={{ position: "relative", top: -24 }} />
-          <div className="wrap forms">
+        <section className="confid" aria-labelledby="confid-title" data-confid>
+          <span className="confid__bg" aria-hidden="true" data-confid-bg />
+          <div className="wrap confid__grid">
+            <span className="confid__lock" data-confid-lock><LockKeyhole size={26} strokeWidth={1.5} aria-hidden="true" /></span>
+            <h2 id="confid-title" className="h2">Grandes decisões exigem confiança e discrição.</h2>
+            <div className="confid__text">
+              <p>As informações enviadas servem apenas para compreender os interesses das partes e organizar o atendimento.</p>
+              <p>Nenhum dado de empresas à venda é publicado neste site, e nesta primeira etapa não pedimos documentos financeiros.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mna-form" aria-labelledby="form-title" id="formulario">
+          <span id="vender" className="anchor" />
+          <span id="comprar" className="anchor" />
+          <div className="wrap mna-form__grid">
             <div>
-              <h2 id="form-title" className="h2" style={{ maxWidth: "12ch" }}>Vamos conversar sobre o seu próximo passo.</h2>
-              <p className="body" style={{ marginTop: 20 }}>Preencha as informações iniciais. O atendimento é individual e segue pelo WhatsApp.</p>
+              <h2 id="form-title" className="h2">Vamos conversar sobre o seu próximo passo.</h2>
+              <p className="body" style={{ marginTop: 20 }}>Duas etapas curtas. O atendimento é individual e segue pelo WhatsApp.</p>
             </div>
             <LeadForms />
           </div>
         </section>
 
-        <section className="section final" aria-labelledby="final-title">
-          <div className="wrap final__inner">
-            <h2 id="final-title" className="h2">O futuro dos seus negócios começa com uma decisão.</h2>
-            <div className="actions">
+        <section className="mna-final" aria-labelledby="final-title" data-mna-final>
+          <div className="wrap mna-final__inner">
+            <h2 id="final-title" className="mna-final__title">{words("O próximo capítulo do seu negócio começa com uma conversa.")}</h2>
+            <div className="actions" data-final-after>
               <a href="#vender" className="btn btn--light">Quero vender minha empresa</a>
               <a href="#comprar" className="btn btn--ghost">Quero comprar uma empresa</a>
             </div>
           </div>
         </section>
-      </main>
+      </SceneRoot>
       <SiteFooter />
     </>
   );

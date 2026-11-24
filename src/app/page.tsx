@@ -1,79 +1,77 @@
-import Image from "next/image";
-import { ArrowRight, Building2, Handshake, Users } from "lucide-react";
+import { ArrowUpRight, Building2, Handshake, Users } from "lucide-react";
 import type { Metadata } from "next";
-import { BrandLockup } from "@/components/brand";
 import { TransitionLink } from "@/components/page-transition";
 import { IMOVEIS_URL } from "@/lib/site";
+import "./home.css";
 
 export const metadata: Metadata = {
-  title: { absolute: "Avança Negócios | Imóveis, networking e compra e venda de empresas em Frutal" },
+  title: { absolute: "Avança | Imóveis, networking e negócios em Frutal, MG" },
+  description: "Imóveis, conexões empresariais e novas oportunidades de negócios em Frutal e região.",
   alternates: { canonical: "/" },
 };
 
 const routes = [
   {
     key: "imoveis", href: IMOVEIS_URL, variant: "imoveis" as const, icon: Building2,
-    title: "Avança Imóveis",
-    text: "Encontre oportunidades imobiliárias e soluções para comprar, vender e investir.",
+    brand: "Avança Imóveis", title: "Imóveis",
+    text: "Encontre seu próximo imóvel ou oportunidade de investimento.",
+    mark: "/brand/avanca-imoveis-simbolo-branco.png",
   },
   {
     key: "eventos", href: "/eventos", variant: "negocios" as const, icon: Users,
-    title: "Eventos e Networking",
-    text: "Conecte-se a empresários, fortaleça relacionamentos e amplie suas oportunidades de negócios.",
+    brand: "Avança Negócios", title: "Eventos",
+    text: "Conecte-se a empresários e amplie suas oportunidades.",
+    mark: "/brand/avanca-negocios-simbolo.png",
   },
   {
     key: "empresas", href: "/compra-e-venda-de-empresas", variant: "negocios" as const, icon: Handshake,
-    title: "Compra e Venda de Empresas",
-    text: "Conectamos empresários e investidores a novas possibilidades de crescimento.",
+    brand: "Avança Negócios", title: "Compra e Venda de Empresas",
+    text: "Encontre compradores ou novas oportunidades de aquisição.",
+    mark: "/brand/avanca-negocios-simbolo.png",
   },
 ];
 
+const imoveisOrigin = new URL(IMOVEIS_URL).origin;
+
 export default function Home() {
   return (
-    <main className="home">
-      <div className="wrap home__inner">
-        <div className="home__top">
-          <span className="sr-only">Avança Negócios</span>
-          <span className="home__place">Frutal, Minas Gerais</span>
-        </div>
+    <main className="av">
+      <link rel="preconnect" href={imoveisOrigin} />
+      <link rel="dns-prefetch" href={imoveisOrigin} />
+      <div className="av__inner">
+        <header className="av__top">
+          <span>Frutal, Minas Gerais</span>
+          <TransitionLink href="/privacidade" variant="avanca">Privacidade</TransitionLink>
+        </header>
 
-        <div className="home__grid">
-          <div>
-            <div className="home__symbol">
-              <Image src="/brand/avanca-negocios.png" alt="Avança Negócios" width={1400} height={936} priority sizes="290px" />
-            </div>
-            <h1 className="display home__title">
-              <span className="line-mask"><span>Conectamos pessoas.</span></span>
-              <span className="line-mask"><span>Criamos oportunidades.</span></span>
-              <span className="line-mask"><span>Transformamos negócios.</span></span>
-            </h1>
-            <p className="lede home__lede fade-in">
-              Um ecossistema que conecta patrimônio, relacionamentos estratégicos e novas oportunidades empresariais.
-            </p>
+        <section className="av__hero" aria-labelledby="av-title">
+          <div className="av__mark">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/brand/avanca-simbolo-preto.png" alt="Avança" width={436} height={388} fetchPriority="high" />
           </div>
+          <h1 id="av-title" className="av__title">
+            <span className="line-mask"><span>Grandes oportunidades</span></span>
+            <span className="line-mask"><span>começam aqui.</span></span>
+          </h1>
+          <p className="av__lede">Imóveis, conexões empresariais e novas oportunidades de negócios. Conheça nossas áreas de atuação.</p>
+        </section>
 
-          <nav aria-label="Escolha a operação">
-            <ul className="routes">
-              {routes.map(({ key, href, variant, icon: Icon, title, text }) => (
-                <li key={key} className={`route route--${key}`}>
-                  <TransitionLink href={href} variant={variant} className="route__link">
-                    <span className="route__icon"><Icon size={20} strokeWidth={1.6} aria-hidden="true" /></span>
-                    <span>
-                      <span className="route__title">{title}</span>
-                      <span className="route__text">{text}</span>
-                    </span>
-                    <ArrowRight className="route__arrow" size={22} strokeWidth={1.6} aria-hidden="true" />
-                  </TransitionLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-
-        <div className="home__foot">
-          <BrandLockup />
-          <TransitionLink href="/privacidade">Política de Privacidade</TransitionLink>
-        </div>
+        <nav className="av__routes" aria-label="Áreas de atuação">
+          {routes.map(({ key, href, variant, icon: Icon, brand, title, text, mark }, i) => (
+            <TransitionLink key={key} href={href} variant={variant} className={`av-route av-route--${key}`} style={{ "--i": i } as React.CSSProperties}>
+              <span className="av-route__fill" aria-hidden="true" />
+              <span className="av-route__top">
+                <Icon className="av-route__icon" size={22} strokeWidth={1.5} aria-hidden="true" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="av-route__mark" src={mark} alt="" width={436} height={388} loading="lazy" />
+              </span>
+              <span className="av-route__brand">{brand}</span>
+              <span className="av-route__title">{title}</span>
+              <span className="av-route__text">{text}</span>
+              <span className="av-route__go" aria-hidden="true"><ArrowUpRight size={22} strokeWidth={1.5} /></span>
+            </TransitionLink>
+          ))}
+        </nav>
       </div>
     </main>
   );

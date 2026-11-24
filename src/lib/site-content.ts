@@ -37,13 +37,11 @@ export const DEFAULT_FERNANDA: FernandaContent = {
   ],
   eventosHeadline: "Conectando pessoas que transformam negócios.",
   eventosParagraphs: [
-    "À frente da Avança Imóveis e da Avança Negócios, Fernanda reúne visão empreendedora, liderança e uma atuação voltada à construção de relacionamentos estratégicos.",
-    "Como empresária e mentora de grandes negócios, acredita no potencial das conexões para gerar oportunidades, compartilhar conhecimento e impulsionar o desenvolvimento empresarial.",
+    "À frente da Avança Imóveis e da Avança Negócios, Fernanda acredita no poder das conexões para gerar oportunidades e impulsionar o desenvolvimento empresarial.",
   ],
   empresasHeadline: "Visão empresarial para decisões que transformam negócios.",
   empresasParagraphs: [
-    "À frente da Avança Imóveis e da Avança Negócios, Fernanda atua com uma visão voltada ao desenvolvimento empresarial, à construção de relacionamentos estratégicos e à identificação de novas oportunidades.",
-    "Sua atuação como empreendedora e mentora de grandes negócios contribui para uma abordagem que valoriza o entendimento dos objetivos de cada empresário e a construção de conexões relevantes.",
+    "Como empreendedora e mentora de grandes negócios, Fernanda conduz cada conversa a partir dos objetivos do empresário, com visão de longo prazo e conexões relevantes.",
   ],
 };
 

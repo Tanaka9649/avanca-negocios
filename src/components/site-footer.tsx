@@ -6,9 +6,9 @@ export function SiteFooter() {
   return (
     <footer className="footer">
       <div className="wrap footer__inner">
-        <TransitionLink href="/" aria-label="Avança Negócios, página inicial"><BrandLockup /></TransitionLink>
+        <TransitionLink href="/" variant="avanca" aria-label="Avança, página inicial"><BrandLockup tone="dark" /></TransitionLink>
         <nav aria-label="Rodapé">
-          <TransitionLink href="/eventos">Eventos e networking</TransitionLink>
+          <TransitionLink href="/eventos">Eventos</TransitionLink>
           <TransitionLink href="/compra-e-venda-de-empresas">Compra e venda de empresas</TransitionLink>
           <TransitionLink href={IMOVEIS_URL} variant="imoveis">Avança Imóveis</TransitionLink>
           <TransitionLink href="/privacidade">Política de Privacidade</TransitionLink>

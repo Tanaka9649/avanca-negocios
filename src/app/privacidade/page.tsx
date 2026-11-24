@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { CONSENT_VERSION } from "@/lib/site";
+import "../negocios.css";
 
 export const metadata: Metadata = { title: "Política de Privacidade", alternates: { canonical: "/privacidade" }, robots: { index: true } };
 
@@ -9,7 +10,7 @@ export default function PrivacidadePage() {
   return (
     <>
       <SiteHeader current="outra" whatsapp="institucional" />
-      <main className="section light" style={{ paddingTop: 160 }}>
+      <main className="neg privacy">
         <div className="wrap prose">
           <h1 className="h2">Política de Privacidade</h1>
           <p>Versão de {CONSENT_VERSION.split("-").reverse().join("/")}.</p>
