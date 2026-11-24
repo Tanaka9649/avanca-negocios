@@ -30,7 +30,7 @@ function ConnectionArt() {
   return (
     <svg viewBox="0 0 600 560" aria-hidden="true">
       <defs>
-        <linearGradient id="ev-grad" x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id="ev-grad" gradientUnits="userSpaceOnUse" x1="60" y1="70" x2="540" y2="480">
           <stop offset="0" stopColor="#e39282" />
           <stop offset="0.35" stopColor="#bc33f2" />
           <stop offset="0.6" stopColor="#862cd4" />
