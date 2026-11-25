@@ -33,8 +33,8 @@
 .fe { padding: clamp(80px, 11vw, 150px) 0; background: #fff; }
 .fe__grid { display: grid; gap: 40px; align-items: end; }
 .fe__photo { position: relative; aspect-ratio: 941 / 1100; background: linear-gradient(170deg, #f2eef9 0%, #e9e6f4 100%); border-radius: 4px; overflow: hidden; }
-.fe__photo-inner { position: absolute; inset: 0; will-change: transform; }
-.fe__photo img { object-fit: cover; object-position: 50% 8%; }
+.fe__photo-inner { position: absolute; inset: 6% 0 0 0; will-change: transform; }
+.fe__photo img { object-fit: cover; object-position: 50% 0%; }
 .fe__text { display: grid; gap: 22px; }
 .fe__name { margin: 0 0 -8px; white-space: nowrap; font-size: clamp(56px, 9.4vw, 136px); line-height: 0.86; font-weight: 600; letter-spacing: -0.06em; color: var(--ink); overflow: hidden; padding-bottom: 0.06em; }
 .fe__name span { display: inline-block; background: var(--brand-gradient); background-size: 900% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -154,8 +154,8 @@ a.co__card:hover { border-color: var(--ink); transform: translateY(-3px); }
 .mf__roles dd { margin: 0; padding: 16px 12px 16px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.18); display: grid; gap: 2px; font-weight: 560; }
 .mf__org { font-size: 14px; font-weight: 450; color: rgba(255, 255, 255, 0.62); }
 .mf__photo { position: relative; margin: 0; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 2px; background: #0b1a6e; }
-.mf__photo-inner { position: absolute; inset: -4% -8%; will-change: transform; }
-.mf__photo img { object-fit: cover; object-position: 50% 8%; }
+.mf__photo-inner { position: absolute; inset: 7% -8% 0 -8%; will-change: transform; }
+.mf__photo img { object-fit: cover; object-position: 50% 0%; }
 .mf__photo figcaption { position: absolute; left: 18px; bottom: 14px; font-size: 13px; color: rgba(255, 255, 255, 0.8); }
 @media (min-width: 980px) { .mf__grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 88px; } .mf__photo { max-width: 460px; justify-self: end; width: 100%; } }
 
@@ -165,10 +165,12 @@ a.co__card:hover { border-color: var(--ink); transform: translateY(-3px); }
 .path { display: grid; gap: 18px; align-content: start; padding: 32px 28px 30px; border-radius: 6px; }
 .path--sell { background: var(--paper); border: 1px solid var(--ink-line); }
 .path--buy { background: var(--ink); color: #fff; }
-.path__tag { margin: 0; font-size: 14px; font-weight: 560; }
+.path__tag { margin: 0 0 -4px; font-size: clamp(40px, 5vw, 64px); font-weight: 650; letter-spacing: -0.05em; line-height: 1; }
 .path--sell .path__tag { color: var(--blue); }
-.path--buy .path__tag { color: rgba(255, 255, 255, 0.6); }
-.path__title { font-size: clamp(24px, 2.4vw, 32px); letter-spacing: -0.03em; max-width: 18ch; }
+.path--buy .path__tag { color: #fff; }
+.path__title { font-size: clamp(20px, 1.9vw, 25px); font-weight: 520; letter-spacing: -0.02em; max-width: 22ch; }
+.path--sell .path__title { color: var(--ink-muted); }
+.path--buy .path__title { color: rgba(255, 255, 255, 0.78); }
 .path ul { list-style: none; margin: 0; padding: 0; display: grid; }
 .path li { padding: 12px 0; border-top: 1px solid var(--ink-line); }
 .path--buy li { border-color: rgba(255, 255, 255, 0.16); color: rgba(255, 255, 255, 0.82); }

@@ -29,8 +29,8 @@ export function eventosScenes({ gsap, ScrollTrigger, root, isDesktop }: SceneCon
       clipPath: "inset(0% 0% 0% 0%)", ease: "none",
       scrollTrigger: { trigger: fe, start: "top 85%", end: isDesktop ? "top 25%" : "top 40%", scrub: 0.4 },
     });
-    gsap.fromTo(q("[data-fe-photo-inner]"), { yPercent: 8, scale: 1.08 }, {
-      yPercent: -4, scale: 1, ease: "none",
+    gsap.fromTo(q("[data-fe-photo-inner]"), { yPercent: 5, scale: 1.06, transformOrigin: "50% 100%" }, {
+      yPercent: 0, scale: 1, ease: "none",
       scrollTrigger: { trigger: fe, start: "top bottom", end: "bottom top", scrub: true },
     });
     gsap.from(q("[data-fe-name] span"), {

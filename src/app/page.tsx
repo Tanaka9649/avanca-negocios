@@ -1,5 +1,6 @@
-import { ArrowUpRight, Building2, Handshake, Users } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
+import { HomeNetwork } from "@/components/motion/home-network";
 import { TransitionLink } from "@/components/page-transition";
 import { IMOVEIS_URL } from "@/lib/site";
 import "./home.css";
@@ -10,24 +11,25 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+// Cada área é representada só pelo símbolo da sua marca.
 const routes = [
   {
-    key: "imoveis", href: IMOVEIS_URL, variant: "imoveis" as const, icon: Building2,
+    key: "imoveis", href: IMOVEIS_URL, variant: "imoveis" as const,
     brand: "Avança Imóveis", title: "Imóveis",
     text: "Encontre seu próximo imóvel ou oportunidade de investimento.",
-    mark: "/brand/avanca-imoveis-simbolo-branco.png",
+    mark: "/brand/avanca-simbolo-preto-112.webp", markHover: "/brand/avanca-simbolo-branco-112.webp", h: 100,
   },
   {
-    key: "eventos", href: "/eventos", variant: "negocios" as const, icon: Users,
+    key: "eventos", href: "/eventos", variant: "negocios" as const,
     brand: "Avança Negócios", title: "Eventos",
     text: "Conecte-se a empresários e amplie suas oportunidades.",
-    mark: "/brand/avanca-negocios-simbolo.png",
+    mark: "/brand/avanca-negocios-simbolo-112.webp", markHover: null, h: 99,
   },
   {
-    key: "empresas", href: "/compra-e-venda-de-empresas", variant: "negocios" as const, icon: Handshake,
+    key: "empresas", href: "/compra-e-venda-de-empresas", variant: "negocios" as const,
     brand: "Avança Negócios", title: "Compra e Venda de Empresas",
     text: "Encontre compradores ou novas oportunidades de aquisição.",
-    mark: "/brand/avanca-negocios-simbolo.png",
+    mark: "/brand/avanca-negocios-simbolo-112.webp", markHover: null, h: 99,
   },
 ];
 
@@ -36,6 +38,7 @@ const imoveisOrigin = new URL(IMOVEIS_URL).origin;
 export default function Home() {
   return (
     <main className="av">
+      <HomeNetwork />
       <link rel="preconnect" href={imoveisOrigin} />
       <link rel="dns-prefetch" href={imoveisOrigin} />
       <div className="av__inner">
@@ -57,18 +60,21 @@ export default function Home() {
         </section>
 
         <nav className="av__routes" aria-label="Áreas de atuação">
-          {routes.map(({ key, href, variant, icon: Icon, brand, title, text, mark }, i) => (
-            <TransitionLink key={key} href={href} variant={variant} className={`av-route av-route--${key}`} style={{ "--i": i } as React.CSSProperties}>
+          {routes.map(({ key, href, variant, brand, title, text, mark, markHover, h }, i) => (
+            <TransitionLink key={key} href={href} variant={variant} className={`av-route av-route--${key}`} data-route={key} style={{ "--i": i } as React.CSSProperties}>
               <span className="av-route__fill" aria-hidden="true" />
-              <span className="av-route__top">
-                <Icon className="av-route__icon" size={22} strokeWidth={1.5} aria-hidden="true" />
+              <span className="av-route__mark" aria-hidden="true">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className="av-route__mark" src={mark} alt="" width={436} height={388} loading="lazy" />
+                <img src={mark} alt="" width={56} height={Math.round(h / 2)} decoding="async" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                {markHover && <img className="av-route__mark-hover" src={markHover} alt="" width={56} height={Math.round(h / 2)} decoding="async" />}
               </span>
-              <span className="av-route__brand">{brand}</span>
-              <span className="av-route__title">{title}</span>
-              <span className="av-route__text">{text}</span>
-              <span className="av-route__go" aria-hidden="true"><ArrowUpRight size={22} strokeWidth={1.5} /></span>
+              <span className="av-route__body">
+                <span className="av-route__brand">{brand}</span>
+                <span className="av-route__title">{title}</span>
+                <span className="av-route__text">{text}</span>
+              </span>
+              <span className="av-route__go" aria-hidden="true"><ArrowUpRight size={20} strokeWidth={1.6} /></span>
             </TransitionLink>
           ))}
         </nav>

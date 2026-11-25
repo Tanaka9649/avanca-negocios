@@ -2,7 +2,10 @@
    AVANÇA — página inicial. Identidade institucional neutra:
    branco, preto e cinzas. Nenhuma cor das operações em repouso.
 ---------------------------------------------------------------- */
-.av { min-height: 100svh; background: var(--n-50); color: var(--n-900); display: flex; }
+.av { position: relative; min-height: 100svh; background: var(--n-50); color: var(--n-900); display: flex; overflow: hidden; isolation: isolate; }
+/* Fundo vivo: rede de pontos em canvas, com um véu suave para manter a leitura do texto */
+.av__bg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; opacity: 0; animation: fade-in 1.4s var(--ease) 0.3s forwards; }
+.av::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 60% 55% at 22% 42%, rgba(250, 250, 250, 0.85) 0%, rgba(250, 250, 250, 0.35) 55%, rgba(250, 250, 250, 0) 100%); }
 .av__inner { width: 100%; max-width: calc(1320px + var(--gutter) * 2); margin: 0 auto; padding: 22px var(--gutter) 28px; display: grid; grid-template-rows: auto 1fr auto; gap: 28px; }
 .av__top { display: flex; justify-content: space-between; font-size: 13px; color: var(--n-500); letter-spacing: 0.01em; }
 .av__top a { text-decoration: none; }
@@ -18,62 +21,74 @@
 .av__title .line-mask:nth-child(2) > span { animation-delay: 0.2s; }
 .av__lede { margin: 0; max-width: 44ch; font-size: clamp(16px, 1.35vw, 19px); line-height: 1.55; color: var(--n-500); opacity: 0; animation: fade-in 0.6s var(--ease) 0.45s forwards; }
 
-/* Três direcionamentos com peso visual idêntico */
-.av__routes { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--n-200); }
+/* Três direcionamentos com peso visual idêntico, cada um representado só pelo símbolo da marca */
+.av__routes { display: grid; grid-template-columns: 1fr; gap: 10px; }
 .av-route {
-  --fill: var(--n-900); --fg: #fff;
-  position: relative; display: grid; grid-template-columns: 1fr auto; grid-template-areas: "top top" "brand go" "title go" "text go";
-  align-items: end; column-gap: 16px; padding: 18px 4px 18px 0; text-decoration: none; color: var(--n-900);
-  border-bottom: 1px solid var(--n-200); isolation: isolate; overflow: hidden; -webkit-tap-highlight-color: transparent;
-  opacity: 0; transform: translateY(10px); animation: av-route-in 0.6s var(--ease-out) calc(0.55s + var(--i) * 0.07s) forwards;
+  --fill: var(--n-900);
+  position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr) 40px; align-items: center; gap: 16px;
+  padding: 14px 14px 14px 14px; text-decoration: none; color: var(--n-900);
+  background: rgba(255, 255, 255, 0.72); border: 1px solid var(--n-200); border-radius: 14px;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  isolation: isolate; overflow: hidden; -webkit-tap-highlight-color: transparent;
+  opacity: 0; transform: translateY(14px);
+  animation: av-route-in 0.6s var(--ease-out) calc(0.55s + var(--i) * 0.08s) forwards;
+  transition: border-color 0.35s ease, transform 0.45s var(--ease-out), box-shadow 0.45s var(--ease-out);
 }
 @keyframes av-route-in { to { opacity: 1; transform: none; } }
-.av-route__fill { position: absolute; inset: 0; z-index: -1; background: var(--fill); clip-path: inset(100% 0 0 0); transition: clip-path 0.5s var(--ease-out); }
-.av-route__top { grid-area: top; display: none; }
-.av-route__brand { grid-area: brand; font-size: 13px; color: var(--n-500); transition: color 0.35s ease; }
-.av-route__title { grid-area: title; font-size: clamp(20px, 2vw, 28px); font-weight: 580; letter-spacing: -0.025em; line-height: 1.12; transition: transform 0.45s var(--ease-out), color 0.35s ease; }
-.av-route__text { grid-area: text; margin-top: 4px; font-size: 14.5px; line-height: 1.45; color: var(--n-500); transition: color 0.35s ease; max-width: 36ch; }
-.av-route__go { grid-area: go; align-self: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--n-200); display: grid; place-items: center; transition: transform 0.45s var(--ease-out), border-color 0.35s ease, background-color 0.35s ease, color 0.35s ease; }
-.av-route__icon { color: var(--n-900); transition: color 0.35s ease; }
-.av-route__mark { width: 34px; height: auto; opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease, transform 0.45s var(--ease-out); }
+.av-route__fill { position: absolute; inset: 0; z-index: -1; background: var(--fill); clip-path: circle(0% at 24px 50%); transition: clip-path 0.6s var(--ease-out); }
+.av-route__mark { position: relative; width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; background: var(--n-100); transition: background-color 0.35s ease, transform 0.5s var(--ease-out); }
+.av-route__mark img { width: 30px; height: auto; transition: opacity 0.3s ease, transform 0.5s var(--ease-out); }
+.av-route__mark-hover { position: absolute; opacity: 0; }
+.av-route__body { display: grid; gap: 1px; min-width: 0; }
+.av-route__brand { font-size: 12px; color: var(--n-500); transition: color 0.35s ease; }
+.av-route__title { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; transition: color 0.35s ease, transform 0.45s var(--ease-out); }
+.av-route__text { font-size: 13.5px; line-height: 1.4; color: var(--n-500); transition: color 0.35s ease; }
+.av-route__go { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--n-200); display: grid; place-items: center; transition: transform 0.45s var(--ease-out), border-color 0.35s ease, color 0.35s ease, background-color 0.35s ease; }
 
-/* Ao passar o mouse, a identidade da operação é revelada; ao sair, volta ao neutro */
+/* Ao passar o mouse: a cor da operação se espalha a partir do símbolo; ao sair, volta ao neutro */
 .av-route--imoveis { --fill: #000; }
-.av-route--eventos { --fill: var(--brand-gradient); }
+.av-route--eventos { --fill: linear-gradient(120deg, #e39282 0%, #bc33f2 32%, #862cd4 58%, #021b8d 100%); }
 .av-route--empresas { --fill: var(--blue); }
 @media (hover: hover) {
-  .av-route:hover .av-route__fill, .av-route:focus-visible .av-route__fill { clip-path: inset(0 0 0 0); }
-  .av-route:hover, .av-route:focus-visible { color: var(--fg); }
+  .av-route:hover, .av-route:focus-visible { border-color: transparent; transform: translateY(-3px); box-shadow: 0 18px 40px -24px rgba(17, 17, 17, 0.45); }
+  .av-route:hover .av-route__fill, .av-route:focus-visible .av-route__fill { clip-path: circle(150% at 24px 50%); }
+  .av-route:hover .av-route__title, .av-route:focus-visible .av-route__title { color: #fff; transform: translateX(4px); }
   .av-route:hover .av-route__brand, .av-route:hover .av-route__text, .av-route:focus-visible .av-route__brand, .av-route:focus-visible .av-route__text { color: rgba(255, 255, 255, 0.78); }
-  .av-route:hover .av-route__icon, .av-route:focus-visible .av-route__icon { color: #fff; }
-  .av-route:hover .av-route__title { transform: translateX(6px); }
-  .av-route:hover .av-route__go, .av-route:focus-visible .av-route__go { transform: translate(3px, -3px); border-color: rgba(255, 255, 255, 0.5); color: #fff; }
-  .av-route:hover .av-route__mark, .av-route:focus-visible .av-route__mark { opacity: 1; transform: none; }
+  .av-route:hover .av-route__go, .av-route:focus-visible .av-route__go { color: #fff; border-color: rgba(255, 255, 255, 0.45); transform: rotate(45deg); }
+  .av-route:hover .av-route__mark, .av-route:focus-visible .av-route__mark { transform: rotate(-6deg) scale(1.06); }
+  .av-route--imoveis:hover .av-route__mark, .av-route--imoveis:focus-visible .av-route__mark { background: rgba(255, 255, 255, 0.1); }
+  .av-route--imoveis:hover .av-route__mark-hover, .av-route--imoveis:focus-visible .av-route__mark-hover { opacity: 1; }
+  .av-route--imoveis:hover .av-route__mark img:first-child, .av-route--imoveis:focus-visible .av-route__mark img:first-child { opacity: 0; }
+  .av-route--eventos:hover .av-route__mark, .av-route--empresas:hover .av-route__mark,
+  .av-route--eventos:focus-visible .av-route__mark, .av-route--empresas:focus-visible .av-route__mark { background: #fff; }
 }
-.av-route:active .av-route__fill { clip-path: inset(0 0 0 0); }
-.av-route:active { color: #fff; }
-.av-route:active .av-route__go { transform: scale(0.92); }
+.av-route:active { transform: scale(0.985); }
 
 @media (min-width: 980px) {
   .av__inner { padding-top: 28px; padding-bottom: 32px; gap: 32px; }
-  .av__routes { grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 0; }
-  .av-route {
-    grid-template-columns: 1fr auto; grid-template-areas: "top top" "brand brand" "title title" "text go";
-    min-height: 260px; padding: 26px 26px 26px 28px; border-bottom: 0; border-top: 1px solid var(--n-200);
+  .av__routes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .av-route { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "mark go" "body body"; align-items: start; gap: 22px 12px; padding: 22px; min-height: 196px; border-radius: 18px; }
+  .av-route__mark { grid-area: mark; width: 56px; height: 56px; border-radius: 14px; }
+  .av-route__mark img { width: 34px; }
+  .av-route__go { grid-area: go; }
+  .av-route__body { grid-area: body; align-self: end; gap: 3px; }
+  .av-route__title { font-size: clamp(19px, 1.6vw, 23px); }
+  .av-route__text { font-size: 14px; max-width: 34ch; }
+  .av-route__fill { clip-path: circle(0% at 50px 50px); }
+  @media (hover: hover) {
+    .av-route:hover .av-route__fill, .av-route:focus-visible .av-route__fill { clip-path: circle(160% at 50px 50px); }
   }
-  .av-route + .av-route { border-left: 1px solid var(--n-200); }
-  .av-route__top { display: flex; justify-content: space-between; align-items: flex-start; align-self: start; height: 100%; }
-  .av-route__title { margin-top: 2px; }
-  .av-route__go { align-self: end; }
-  /* Linha superior desenhada na entrada */
-  .av-route::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--n-900); transform: scaleX(0); transform-origin: left; animation: av-line 0.9s var(--ease-out) calc(0.65s + var(--i) * 0.07s) forwards; }
-  @keyframes av-line { 0% { transform: scaleX(0); } 60% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
 }
 @media (max-width: 979px) {
-  .av-route__brand { font-size: 12.5px; }
+  .av__inner { gap: 22px; }
+  .av__hero { gap: 16px; }
+  .av-route { padding: 12px; gap: 14px; }
+  .av-route__title { font-size: 17px; }
+  .av-route__text { font-size: 13px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .av__bg { opacity: 1; }
   .av__mark img { clip-path: none; }
   .av-route, .av__lede { opacity: 1; transform: none; }
 }
