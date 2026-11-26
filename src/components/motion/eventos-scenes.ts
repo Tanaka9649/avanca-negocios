@@ -43,26 +43,7 @@ export function eventosScenes({ gsap, ScrollTrigger, root, isDesktop }: SceneCon
     });
   }
 
-  /* 3. Empresas participantes: o trilho anda na horizontal conforme a rolagem vertical */
-  const rail = one("[data-rail]");
-  const track = one("[data-rail-track]");
-  if (rail && track && isDesktop && rail.dataset.mode === "rail") {
-    const distance = () => Math.max(0, track.scrollWidth - (one("[data-rail-viewport]")?.clientWidth ?? window.innerWidth));
-    if (distance() > 40) {
-      gsap.to(track, {
-        x: () => -distance(), ease: "none",
-        scrollTrigger: { trigger: rail, start: "top top", end: () => `+=${Math.min(distance(), window.innerHeight * 1.1)}`, scrub: 0.6, pin: true, invalidateOnRefresh: true, anticipatePin: 1 },
-      });
-    }
-  }
-  if (rail && rail.dataset.mode !== "rail" && fresh(rail)) {
-    gsap.from(q("[data-company]"), {
-      opacity: 0, y: 24, duration: 0.7, ease: "power3.out", stagger: 0.07,
-      scrollTrigger: { trigger: rail, start: "top 75%", toggleActions: "play none none reverse" },
-    });
-  }
-
-  /* 4. Benefícios: título fixo, a linha de rede cresce e cada conceito acende ao passar */
+  /* 3. Benefícios: título fixo, a linha de rede cresce e cada conceito acende ao passar */
   const ben = one("[data-benefits]");
   if (ben) {
     gsap.fromTo(q("[data-ben-line]"), { scaleY: 0 }, {
