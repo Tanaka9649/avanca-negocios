@@ -63,7 +63,7 @@
 .co__card { display: grid; gap: 6px; width: 260px; min-height: 220px; padding: 22px; background: #fff; border: 1px solid var(--ink-line); border-radius: 6px; text-decoration: none; transition: border-color 0.25s ease, transform 0.35s var(--ease-out); }
 a.co__card:hover { border-color: var(--ink); transform: translateY(-3px); }
 .co__logo { height: 96px; display: grid; place-items: center start; margin-bottom: 8px; }
-.co__logo img { max-height: 72px; max-width: 180px; width: auto; object-fit: contain; }
+.co__logo img { max-height: 88px; max-width: 176px; width: auto; object-fit: contain; }
 .co__initial { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: #fff; font-weight: 600; font-size: 22px; }
 .co__name { font-weight: 580; }
 .co__seg { font-size: 14px; color: var(--ink-muted); }

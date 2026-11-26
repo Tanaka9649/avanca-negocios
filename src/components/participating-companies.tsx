@@ -6,15 +6,15 @@ function href(c: PublicCompany) {
   return null;
 }
 
-/** Empresas cadastradas no painel. Sem empresas, a seção não aparece. Com 5 ou mais, vira um trilho horizontal guiado pela rolagem. */
+/** Empresas que já passaram pelo Avança, cadastradas no painel. Sem empresas, a seção não aparece. Com 5 ou mais, vira um trilho horizontal guiado pela rolagem. */
 export function ParticipatingCompanies({ companies }: { companies: PublicCompany[] }) {
   if (companies.length === 0) return null;
   const mode = companies.length >= 5 ? "rail" : "grid";
   return (
     <section className={`co co--${mode}`} aria-labelledby="empresas-title" data-rail data-mode={mode}>
       <div className="wrap co__head">
-        <h2 id="empresas-title" className="h2">Empresas que fazem parte.</h2>
-        <p className="body">Empresários de diferentes segmentos que acreditam no poder das conexões.</p>
+        <h2 id="empresas-title" className="h2">Empresas que já passaram pelo Avança.</h2>
+        <p className="body">Empresários de diferentes segmentos que já fizeram parte das conexões da Avança.</p>
       </div>
       <div className="co__viewport" data-rail-viewport>
         <ul className="co__track" data-rail-track>
