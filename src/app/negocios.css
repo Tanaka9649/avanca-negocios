@@ -58,6 +58,7 @@
 .co__head { display: grid; gap: 14px; margin-bottom: 40px; }
 .co__grid { list-style: none; margin: 0 auto; padding: 0 var(--gutter); display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .co__cell { min-width: 0; }
+.co__cell[data-wide] { grid-column: span 2; }
 .co__card { display: grid; place-items: center; height: 120px; padding: 18px; background: #fff; border: 1px solid var(--ink-line); border-radius: 6px; text-decoration: none; transition: border-color 0.25s ease, transform 0.35s var(--ease-out); }
 a.co__card:hover { border-color: var(--ink); transform: translateY(-3px); }
 .co__card img { max-height: 84px; max-width: 100%; width: auto; object-fit: contain; }

@@ -1,4 +1,5 @@
 import type { PublicCompany } from "@/lib/public-data";
+import { CompanyLogo } from "@/components/company-logo";
 
 function href(c: PublicCompany) {
   if (c.website) return c.website.startsWith("http") ? c.website : `https://${c.website}`;
@@ -19,8 +20,7 @@ export function ParticipatingCompanies({ companies }: { companies: PublicCompany
         {companies.map((c) => {
           const link = href(c);
           const logo = c.logoUrl
-            // eslint-disable-next-line @next/next/no-img-element
-            ? <img src={c.logoUrl} alt={c.name} loading="lazy" decoding="async" />
+            ? <CompanyLogo src={c.logoUrl} alt={c.name} />
             : <span className="co__initial" aria-label={c.name}>{c.name.slice(0, 1)}</span>;
           return (
             <li key={c.id} className="co__cell">
